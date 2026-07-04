@@ -1,314 +1,371 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>小维 · 技术导航</title>
-<link rel="icon" href="/favicon.ico?v=1" />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>小维 · 技术导航</title>
+    <link rel="icon" href="/favicon.ico?v=1" />
 
-<style>
-:root {
-    font-size: 0.9vw; /* 字体自适应核心：随屏幕宽度缩放 */
-}
+    <style>
+      :root {
+        font-size: 0.9vw; /* 字体自适应核心：随屏幕宽度缩放 */
+      }
 
-/* ===== 全局 ===== */
-body {
-    margin: 0;
-    font-family: "Segoe UI", "PingFang SC", sans-serif;
-    background: #f5f7fa;
-    color: #333;
-    overflow: hidden; /* 不出现滚动条 */
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
+      /* ===== 全局 ===== */
+      body {
+        margin: 0;
+        font-family: "Segoe UI", "PingFang SC", sans-serif;
+        background: #f5f7fa;
+        color: #333;
+        overflow: hidden; /* 不出现滚动条 */
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
 
-/* ===== 背景星云粒子 ===== */
-.bg-particles {
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-}
+      /* ===== 背景星云粒子 ===== */
+      .bg-particles {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+      }
 
-.particle {
-    position: absolute;
-    width: 0.25vw;
-    height: 0.25vw;
-    background: rgba(0, 150, 255, 0.7);
-    border-radius: 50%;
-    animation: float 8s infinite ease-in-out;
-    filter: blur(0.1vw);
-}
+      .particle {
+        position: absolute;
+        width: 0.25vw;
+        height: 0.25vw;
+        background: rgba(0, 150, 255, 0.7);
+        border-radius: 50%;
+        animation: float 8s infinite ease-in-out;
+        filter: blur(0.1vw);
+      }
 
-@keyframes float {
-    0% { transform: translateY(0) scale(1); opacity: 0.8; }
-    50% { transform: translateY(-6vh) scale(1.4); opacity: 1; }
-    100% { transform: translateY(0) scale(1); opacity: 0.8; }
-}
+      @keyframes float {
+        0% {
+          transform: translateY(0) scale(1);
+          opacity: 0.8;
+        }
+        50% {
+          transform: translateY(-6vh) scale(1.4);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(0) scale(1);
+          opacity: 0.8;
+        }
+      }
 
-/* ===== 左右能量流 ===== */
-.energy {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    width: 10vw;
-    pointer-events: none;
-    z-index: 1;
-}
+      /* ===== 左右能量流 ===== */
+      .energy {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        width: 10vw;
+        pointer-events: none;
+        z-index: 1;
+      }
 
-.left { left: 0; }
-.right { right: 0; }
+      .left {
+        left: 0;
+      }
+      .right {
+        right: 0;
+      }
 
-.beam {
-    position: absolute;
-    width: 0.2vw;
-    height: 12vh;
-    background: linear-gradient(180deg, transparent, #00eaff, transparent);
-    opacity: 0.6;
-    animation: beamMove 4s infinite linear;
-    filter: blur(0.1vw);
-}
+      .beam {
+        position: absolute;
+        width: 0.2vw;
+        height: 12vh;
+        background: linear-gradient(180deg, transparent, #00eaff, transparent);
+        opacity: 0.6;
+        animation: beamMove 4s infinite linear;
+        filter: blur(0.1vw);
+      }
 
-@keyframes beamMove {
-    0% { transform: translateY(120%); }
-    100% { transform: translateY(-120%); }
-}
+      @keyframes beamMove {
+        0% {
+          transform: translateY(120%);
+        }
+        100% {
+          transform: translateY(-120%);
+        }
+      }
 
-/* ===== 中央光晕 ===== */
-.glow {
-    position: fixed;
-    top: 45%;
-    left: 50%;
-    width: 32vw;
-    height: 32vw;
-    transform: translate(-50%, -50%);
-    background: radial-gradient(circle, rgba(0,150,255,0.22), transparent 70%);
-    filter: blur(4vw);
-    z-index: 0;
-}
+      /* ===== 中央光晕 ===== */
+      .glow {
+        position: fixed;
+        top: 45%;
+        left: 50%;
+        width: 32vw;
+        height: 32vw;
+        transform: translate(-50%, -50%);
+        background: radial-gradient(
+          circle,
+          rgba(0, 150, 255, 0.22),
+          transparent 70%
+        );
+        filter: blur(4vw);
+        z-index: 0;
+      }
 
-/* ===== 主体内容 ===== */
-.content {
-    z-index: 10;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 4vh;
-}
+      /* ===== 主体内容 ===== */
+      .content {
+        z-index: 10;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 4vh;
+      }
 
-/* 头像 */
-.avatar {
-    width: 8vw;
-    height: 8vw;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 0.3vw solid #fff;
-    box-shadow: 0 1vw 3vw rgba(0,0,0,0.18);
-    transition: 0.4s;
-}
-.avatar:hover {
-    transform: scale(1.08) rotate(2deg);
-}
+      /* 头像 */
+      .avatar {
+        width: 8vw;
+        height: 8vw;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 0.3vw solid #fff;
+        box-shadow: 0 1vw 3vw rgba(0, 0, 0, 0.18);
+        transition: 0.4s;
+      }
+      .avatar:hover {
+        transform: scale(1.08) rotate(2deg);
+      }
 
-/* 名字 */
-h1 {
-    margin: 1vh 0 0.5vh;
-    font-size: 3vw;
-    font-weight: 900;
-    background: linear-gradient(90deg, #007bff, #00c6ff, #00eaff);
-    -webkit-background-clip: text;
-    color: transparent;
-    text-align: center;
-}
+      /* 名字 */
+      h1 {
+        margin: 1vh 0 0.5vh;
+        font-size: 3vw;
+        font-weight: 900;
+        background: linear-gradient(90deg, #007bff, #00c6ff, #00eaff);
+        -webkit-background-clip: text;
+        color: transparent;
+        text-align: center;
+      }
 
-/* 简介 */
-.bio {
-    text-align: center;
-    font-size: 1.1vw;
-    color: #555;
-    max-width: 40vw;
-    line-height: 1.6;
-}
+      /* 简介 */
+      .bio {
+        text-align: center;
+        font-size: 1.1vw;
+        color: #555;
+        max-width: 40vw;
+        line-height: 1.6;
+      }
 
-/* ===== 链接卡片 ===== */
-.links {
-    width: 80vw;
-    height: 45vh; /* 3 行固定高度 */
-    margin-top: 4vh;
+      /* ===== 链接卡片 ===== */
+      .links {
+        width: 80vw;
+        height: 45vh; /* 3 行固定高度 */
+        margin-top: 4vh;
 
-    display: grid;
-    grid-template-rows: repeat(3, 1fr); /* 固定 3 行 */
-    grid-template-columns: repeat(auto-fill, minmax(16vw, 1fr)); /* 自动列数 */
-    gap: 2vw;
+        display: grid;
+        grid-template-rows: repeat(3, 1fr); /* 固定 3 行 */
+        grid-template-columns: repeat(
+          auto-fill,
+          minmax(16vw, 1fr)
+        ); /* 自动列数 */
+        gap: 2vw;
 
-    align-content: space-between; /* 行距均匀 */
-}
+        align-content: space-between; /* 行距均匀 */
+      }
 
+      .card-title {
+        font-size: 1.3vw;
+        font-weight: 700;
+        margin-bottom: 0.5vh;
+      }
 
-.card-title {
-    font-size: 1.3vw;
-    font-weight: 700;
-    margin-bottom: 0.5vh;
-}
+      .card-desc {
+        font-size: 0.9vw;
+        color: #666;
+        white-space: nowrap; /* 只显示一行 */
+        overflow: hidden; /* 超出隐藏 */
+        text-overflow: ellipsis; /* 超出显示 ... */
+        line-height: 1.2;
+      }
 
-.card-desc {
-    font-size: 0.9vw;
-    color: #666;
-    white-space: nowrap;        /* 只显示一行 */
-    overflow: hidden;           /* 超出隐藏 */
-    text-overflow: ellipsis;    /* 超出显示 ... */
-    line-height: 1.2;
-}
+      /* 霓虹流光按钮 */
+      .card {
+        position: relative;
+        padding: 1.2vw;
+        border-radius: 1.2vw;
+        text-align: center;
+        text-decoration: none;
+        color: #333;
+        font-size: 1.3vw;
+        font-weight: 700;
 
-/* 霓虹流光按钮 */
-.card {
-    position: relative;
-    padding: 1.2vw;
-    border-radius: 1.2vw;
-    text-align: center;
-    text-decoration: none;
-    color: #333;
-    font-size: 1.3vw;
-    font-weight: 700;
+        background: rgba(255, 255, 255, 0.8);
+        border: 0.05vw solid rgba(0, 0, 0, 0.05);
+        backdrop-filter: blur(1vw);
 
-    background: rgba(255,255,255,0.8);
-    border: 0.05vw solid rgba(0,0,0,0.05);
-    backdrop-filter: blur(1vw);
+        transition: 0.35s;
+        overflow: hidden;
+        box-shadow: 0 0.6vw 1.6vw rgba(0, 0, 0, 0.1);
+      }
 
-    transition: 0.35s;
-    overflow: hidden;
-    box-shadow: 0 0.6vw 1.6vw rgba(0,0,0,0.1);
-}
+      /* 外圈能量流光 */
+      .card::before {
+        content: "";
+        position: absolute;
+        inset: -0.2vw;
+        border-radius: 1.3vw;
+        background: linear-gradient(120deg, #00eaff, #007bff, #00c6ff, #00eaff);
+        background-size: 300% 300%;
+        animation: neonFlow 4s infinite ease;
+        z-index: -1;
+        opacity: 0;
+        transition: 0.4s;
+      }
 
-/* 外圈能量流光 */
-.card::before {
-    content: "";
-    position: absolute;
-    inset: -0.2vw;
-    border-radius: 1.3vw;
-    background: linear-gradient(120deg, #00eaff, #007bff, #00c6ff, #00eaff);
-    background-size: 300% 300%;
-    animation: neonFlow 4s infinite ease;
-    z-index: -1;
-    opacity: 0;
-    transition: 0.4s;
-}
+      @keyframes neonFlow {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
 
-@keyframes neonFlow {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
+      /* 内层玻璃 */
+      .card::after {
+        content: "";
+        position: absolute;
+        inset: 0.2vw;
+        border-radius: 1vw;
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(0.8vw);
+        z-index: -1;
+      }
 
-/* 内层玻璃 */
-.card::after {
-    content: "";
-    position: absolute;
-    inset: 0.2vw;
-    border-radius: 1vw;
-    background: rgba(255,255,255,0.9);
-    backdrop-filter: blur(0.8vw);
-    z-index: -1;
-}
+      /* 悬浮效果 */
+      .card:hover {
+        transform: translateY(-0.6vw) scale(1.05);
+        box-shadow: 0 1.2vw 2.4vw rgba(0, 0, 0, 0.18);
+      }
+      .card:hover::before {
+        opacity: 1;
+      }
 
-/* 悬浮效果 */
-.card:hover {
-    transform: translateY(-0.6vw) scale(1.05);
-    box-shadow: 0 1.2vw 2.4vw rgba(0,0,0,0.18);
-}
-.card:hover::before {
-    opacity: 1;
-}
+      /* ===== 页脚 ===== */
+      footer {
+        text-align: center;
+        padding: 1vh 0;
+        font-size: 0.9vw;
+        color: #999;
+      }
+    </style>
+  </head>
 
-/* ===== 页脚 ===== */
-footer {
-    text-align: center;
-    padding: 1vh 0;
-    font-size: 0.9vw;
-    color: #999;
-}
+  <body>
+    <!-- 背景粒子 -->
+    <div class="bg-particles">
+      <div
+        class="particle"
+        style="top: 20%; left: 10%; animation-delay: 0s"
+      ></div>
+      <div
+        class="particle"
+        style="top: 60%; left: 30%; animation-delay: 1s"
+      ></div>
+      <div
+        class="particle"
+        style="top: 80%; left: 70%; animation-delay: 2s"
+      ></div>
+      <div
+        class="particle"
+        style="top: 40%; left: 90%; animation-delay: 1.5s"
+      ></div>
+      <div
+        class="particle"
+        style="top: 75%; left: 50%; animation-delay: 0.5s"
+      ></div>
+    </div>
 
-</style>
-</head>
+    <!-- 能量流 -->
+    <div class="energy left">
+      <div class="beam" style="left: 40%; animation-delay: 0s"></div>
+      <div class="beam" style="left: 70%; animation-delay: 1.5s"></div>
+    </div>
 
-<body>
+    <div class="energy right">
+      <div class="beam" style="left: 20%; animation-delay: 0.8s"></div>
+      <div class="beam" style="left: 60%; animation-delay: 2s"></div>
+    </div>
 
-<!-- 背景粒子 -->
-<div class="bg-particles">
-    <div class="particle" style="top:20%; left:10%; animation-delay:0s;"></div>
-    <div class="particle" style="top:60%; left:30%; animation-delay:1s;"></div>
-    <div class="particle" style="top:80%; left:70%; animation-delay:2s;"></div>
-    <div class="particle" style="top:40%; left:90%; animation-delay:1.5s;"></div>
-    <div class="particle" style="top:75%; left:50%; animation-delay:0.5s;"></div>
-</div>
+    <!-- 光晕 -->
+    <div class="glow"></div>
 
-<!-- 能量流 -->
-<div class="energy left">
-    <div class="beam" style="left:40%; animation-delay:0s;"></div>
-    <div class="beam" style="left:70%; animation-delay:1.5s;"></div>
-</div>
+    <!-- 主体内容 -->
+    <div class="content">
+      <img
+        src="./avatar.webp"
+        class="avatar"
+        alt="Lucky 小维头像"
+        width="128"
+        height="128"
+        decoding="async"
+      />
 
-<div class="energy right">
-    <div class="beam" style="left:20%; animation-delay:0.8s;"></div>
-    <div class="beam" style="left:60%; animation-delay:2s;"></div>
-</div>
+      <h1>Lucky 小维</h1>
 
-<!-- 光晕 -->
-<div class="glow"></div>
+      <p class="bio">全栈开发者 · Python | Java | Vue · 以下均是个人网站</p>
 
-<!-- 主体内容 -->
-<div class="content">
+      <div class="links">
+        <a class="card" href="https://blog.luckynwa.top" target="_blank">
+          <div class="card-title">🌐 博客网 / 主站</div>
+          <div class="card-desc">写文章、记录笔记、分享知识</div>
+        </a>
+        <a
+          class="card"
+          href="https://vue.luckynwa.top/lucky-vue/"
+          target="_blank"
+        >
+          <div class="card-title">📘 Vue文档</div>
+          <div class="card-desc">记录 Vue 开发相关知识</div>
+        </a>
+        <a
+          class="card"
+          href="https://tool.luckynwa.top/lucky-tools/"
+          target="_blank"
+        >
+          <div class="card-title">🛠 小维工具站</div>
+          <div class="card-desc">基于开源工具站二开部署</div>
+        </a>
+        <a class="card" href="https://admin.luckynwa.top" target="_blank">
+          <div class="card-title">🖥 Java后台管理系统</div>
+          <div class="card-desc">基于若依框架二开后台系统</div>
+        </a>
 
-    <img src="./avatar.webp" class="avatar" alt="Lucky 小维头像" width="128" height="128" decoding="async">
+        <a class="card" href="https://rag.luckynwa.top" target="_blank">
+          <div class="card-title">🤖 Rag 对话平台</div>
+          <div class="card-desc">基于fastApi开发的对话平台</div>
+        </a>
 
-    <h1>Lucky 小维</h1>
-
-    <p class="bio">
-        全栈开发者 · Python | Java | Vue · 以下均是个人网站
-    </p>
-
-    <div class="links">
-
-      <a class="card" href="https://blog.luckynwa.top" target="_blank">
-        <div class="card-title">🌐 博客网 / 主站</div>
-        <div class="card-desc">写文章、记录笔记、分享知识</div>
-    </a>
-    <a class="card" href="https://vue.luckynwa.top/lucky-vue/" target="_blank">
-      <div class="card-title">📘 前端知识库</div>
-      <div class="card-desc">记录 Vue / JS 学习笔记</div>
-    </a>
-    <a class="card" href="https://tool.luckynwa.top/lucky-tools/" target="_blank">
-        <div class="card-title">🛠 小维工具站</div>
-        <div class="card-desc">基于开源工具站二开部署</div>
-    </a>
-    <a class="card" href="https://admin.luckynwa.top" target="_blank">
-        <div class="card-title">🖥 Java后台管理系统</div>
-        <div class="card-desc">基于若依框架二开后台系统</div>
-    </a>
-    
-    <a class="card" href="https://rag.luckynwa.top" target="_blank">
-        <div class="card-title">🤖 Rag 对话平台</div>
-        <div class="card-desc">基于fastApi开发的对话平台</div>
-    </a>
-    
-    <!-- <a class="card" href="https://admin17.luckynwa.top" target="_blank">
+        <!-- <a class="card" href="https://admin17.luckynwa.top" target="_blank">
         <div class="card-title">🧩 AI 后台系统</div>
         <div class="card-desc">基于芋道的 AI 管理系统，未上线</div>
     </a> -->
-    
-    <a class="card" href="https://blog.csdn.net/weixin_44055864" target="_blank">
-        <div class="card-title">📚 CSDN 博客</div>
-        <div class="card-desc">技术文章同步更新</div>
-    </a>
-    
-    <a class="card" href="https://github.com/luckyNwa6" target="_blank">
-        <div class="card-title">🐙 GitHub</div>
-        <div class="card-desc">开源项目与代码仓库</div>
-    </a>
-    
-    <!-- <a class="card" href="#" target="_blank">
+
+        <a
+          class="card"
+          href="https://blog.csdn.net/weixin_44055864"
+          target="_blank"
+        >
+          <div class="card-title">📚 CSDN 博客</div>
+          <div class="card-desc">技术文章同步更新</div>
+        </a>
+
+        <a class="card" href="https://github.com/luckyNwa6" target="_blank">
+          <div class="card-title">🐙 GitHub</div>
+          <div class="card-desc">开源项目与代码仓库</div>
+        </a>
+
+        <!-- <a class="card" href="#" target="_blank">
         <div class="card-title">🚧 开发中...</div>
         <div class="card-desc">建设中，敬请期待</div>
     </a>
@@ -317,21 +374,23 @@ footer {
         <div class="card-title">🚧 开发中...</div>
         <div class="card-desc">建设中，敬请期待</div>
     </a> -->
-    
-
+      </div>
     </div>
 
-</div>
-
-<footer>
-   <span style="color: black;">© 2025 Lucky 小维  |</span>           
-   <a href="https://beian.miit.gov.cn/" style="text-decoration: none; color: #000">
+    <footer>
+      <span style="color: black">© 2025 Lucky 小维 |</span>
+      <a
+        href="https://beian.miit.gov.cn/"
+        style="text-decoration: none; color: #000"
+      >
         <span style="padding: 2px">
-          <img src="https://imgs.luckynwa.top/profile/blog/gonganbeian.png" style="height: 12.6px; margin-left: 1px" />
+          <img
+            src="https://imgs.luckynwa.top/profile/blog/gonganbeian.png"
+            style="height: 12.6px; margin-left: 1px"
+          />
           <span style="margin-left: 3px">闽ICP备 2023003457号-1</span>
         </span>
-    </a>
-</footer>
-
-</body>
+      </a>
+    </footer>
+  </body>
 </html>

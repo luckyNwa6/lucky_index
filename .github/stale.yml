@@ -1,0 +1,15 @@
+# 闲置多少天后，issue会变得过时
+daysUntilStale: 60
+# 一个过时的issue在多少天的闲置后会被关闭
+daysUntilClose: 7
+# 具有这些标签的issue永远不会被认为是过时的
+exemptLabels:
+  - pinned
+  - security
+# 标记issue为过时时使用的标签
+staleLabel: wontfix
+# 标记issue为过时时发布的评论。设置为`false`以禁用
+markComment: >
+  由于此issue最近没有活动，已自动将其标记为过时。如果没有进一步的活动，它将被关闭。感谢您的贡献。
+# 关闭过时的issue时发布的评论。设置为`false`以禁用
+closeComment: false

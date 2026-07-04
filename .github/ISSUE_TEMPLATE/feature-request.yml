@@ -1,0 +1,56 @@
+name: 🚀 新功能建议
+description: 提出一个新功能添加到项目中
+labels: ["enhancement", "idea"]
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢您对项目的关注，并花时间填写此功能报告！
+
+  - type: dropdown
+    id: request-type
+    attributes:
+      label: 这是什么类型的请求？
+      options:
+        - 新工具创意
+        - 现有工具的新功能
+        - 部署或 CI/CD 改进
+        - 自托管改进
+        - 其他
+    validations:
+      required: true
+
+  - type: textarea
+    id: feature-description
+    attributes:
+      label: 您提议的功能的清晰简洁描述
+      description: 该功能的清晰简洁描述。
+      placeholder: "例如：一个令牌生成器工具"
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternative
+    attributes:
+      label: 是否有这种工具的示例？
+      description: 提供已经存在的工具的链接（例如网站、应用程序、CLI 等）或 npm 包，这些可能会为该功能提供灵感。
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: 其他上下文
+      description: 关于功能请求的其他上下文或截图。
+
+  - type: checkboxes
+    id: checkboxes
+    attributes:
+      label: 验证
+      description: 在提交问题之前，请确保完成以下操作
+      options:
+        - label: 检查该功能是否已在项目中实现。
+          required: true
+        - label: 检查是否已经有一个请求相同功能的问题，以避免创建重复的问题。
+          required: true
+        - label: 检查该功能是否可以在仅客户端应用程序中实现（IT-Tools 仅为客户端应用程序，没有服务器）。
+          required: true

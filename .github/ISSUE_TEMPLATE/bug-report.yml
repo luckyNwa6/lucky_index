@@ -1,0 +1,48 @@
+name: 🐞 错误报告
+description: 提交一个错误报告。
+labels: ["bug"]
+assignees:
+  - CorentinTh
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢您花时间填写这个错误报告！
+
+  - type: textarea
+    id: bug-description
+    attributes:
+      label: 描述错误
+      description: 清晰简洁地描述这个错误是什么。如果您打算为此问题提交PR，请在描述中告诉我们。谢谢！
+      placeholder: 错误描述
+    validations:
+      required: true
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: 发生了什么？
+      description: 也请告诉我们，您期望发生什么？如果您有截图，可以在这里粘贴。
+      placeholder: 告诉我们您看到的！
+      value: "发生了一个错误！"
+    validations:
+      required: true
+
+  - type: textarea
+    id: version
+    attributes:
+      label: 系统信息
+      description: 您的环境是什么？您可以使用`npx envinfo --system --browsers`命令获取这些信息。
+    validations:
+      required: true
+
+  - type: dropdown
+    id: app-type
+    attributes:
+      label: 您在哪里遇到了这个错误？
+      options:
+        - 公共应用程序 (it-tools.tech)
+        - 自托管
+        - 其他（安装、docker等）
+    validations:
+      required: true
