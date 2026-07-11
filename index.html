@@ -176,6 +176,30 @@
         margin-bottom: 0.5vh;
       }
 
+      /* 网站状态 - 卡片边框变色 */
+      .card.status-green {
+        border-color: rgba(102, 187, 106, 0.35);
+        box-shadow: 0 0.6vw 1.6vw rgba(0, 0, 0, 0.1),
+                    0 0 0.8vw rgba(102, 187, 106, 0.12);
+      }
+
+      .card.status-red {
+        border-color: rgba(239, 83, 80, 0.35);
+        box-shadow: 0 0.6vw 1.6vw rgba(0, 0, 0, 0.1),
+                    0 0 0.8vw rgba(239, 83, 80, 0.12);
+      }
+
+      .card.status-yellow {
+        border-color: rgba(255, 167, 38, 0.35);
+        box-shadow: 0 0.6vw 1.6vw rgba(0, 0, 0, 0.1),
+                    0 0 0.8vw rgba(255, 167, 38, 0.12);
+      }
+
+      @keyframes blink {
+        0%, 100% { opacity: 0.4; }
+        50% { opacity: 1; }
+      }
+
       .card-desc {
         font-size: 0.9vw;
         color: #666;
@@ -316,7 +340,7 @@
       <p class="bio">全栈开发者 · Python | Java | Vue · 以下均是个人网站</p>
 
       <div class="links">
-        <a class="card" href="https://blog.luckynwa.top" target="_blank">
+        <a class="card" href="https://blog.luckynwa.top" target="_blank" data-url="https://blog.luckynwa.top">
           <div class="card-title">🌐 博客网 / 主站</div>
           <div class="card-desc">写文章、记录笔记、分享知识</div>
         </a>
@@ -324,6 +348,7 @@
           class="card"
           href="https://vue.luckynwa.top/lucky-vue/"
           target="_blank"
+          data-url="https://vue.luckynwa.top"
         >
           <div class="card-title">📘 Vue文档</div>
           <div class="card-desc">记录 Vue 开发相关知识</div>
@@ -332,16 +357,17 @@
           class="card"
           href="https://tool.luckynwa.top/lucky-tools/"
           target="_blank"
+          data-url="https://tool.luckynwa.top"
         >
           <div class="card-title">🛠 小维工具站</div>
           <div class="card-desc">基于开源工具站二开部署</div>
         </a>
-        <a class="card" href="https://admin.luckynwa.top" target="_blank">
+        <a class="card" href="https://admin.luckynwa.top" target="_blank" data-url="https://admin.luckynwa.top">
           <div class="card-title">🖥 Java后台管理系统</div>
           <div class="card-desc">基于若依框架二开后台系统</div>
         </a>
 
-        <a class="card" href="https://rag.luckynwa.top" target="_blank">
+        <a class="card" href="https://rag.luckynwa.top" target="_blank" data-url="https://rag.luckynwa.top">
           <div class="card-title">🤖 Rag 对话平台</div>
           <div class="card-desc">基于fastApi开发的对话平台</div>
         </a>
@@ -355,12 +381,13 @@
           class="card"
           href="https://blog.csdn.net/weixin_44055864"
           target="_blank"
+          data-url="https://blog.csdn.net"
         >
           <div class="card-title">📚 CSDN 博客</div>
           <div class="card-desc">技术文章同步更新</div>
         </a>
 
-        <a class="card" href="https://github.com/luckyNwa6" target="_blank">
+        <a class="card" href="https://github.com/luckyNwa6" target="_blank" data-url="https://github.com">
           <div class="card-title">🐙 GitHub</div>
           <div class="card-desc">开源项目与代码仓库</div>
         </a>
@@ -392,5 +419,55 @@
         </span>
       </a>
     </footer>
+    <script>
+      // 网站状态检测逻辑
+      (function () {
+        const SLOW_THRESHOLD = 3000; // 3秒以上视为忙碌
+
+        document.querySelectorAll('.card[data-url]').forEach(function (card) {
+          var url = card.getAttribute('data-url');
+          if (!url) return;
+
+          var start = Date.now();
+
+          // 先尝试 no-cors 模式（跨域也能判断是否可达）
+          fetch(url, {
+            method: 'HEAD',
+            mode: 'no-cors',
+            cache: 'no-store',
+          })
+            .then(function () {
+              var elapsed = Date.now() - start;
+              if (elapsed > SLOW_THRESHOLD) {
+                setStatus(card, 'yellow', '忙碌');
+              } else {
+                setStatus(card, 'green', '正常');
+              }
+            })
+            .catch(function () {
+              // 第一次失败，再试一次带 cors 的 fetch
+              fetch(url, { method: 'HEAD', cache: 'no-store' })
+                .then(function (res) {
+                  var elapsed = Date.now() - start;
+                  if (res.ok && elapsed <= SLOW_THRESHOLD) {
+                    setStatus(card, 'green', '正常');
+                  } else if (res.ok && elapsed > SLOW_THRESHOLD) {
+                    setStatus(card, 'yellow', '忙碌');
+                  } else {
+                    setStatus(card, 'red', '异常 ' + res.status);
+                  }
+                })
+                .catch(function () {
+                  setStatus(card, 'red', '不可用');
+                });
+            });
+        });
+
+        function setStatus(el, color, title) {
+          el.classList.add('status-' + color);
+          el.title = title;
+        }
+      })();
+    </script>
   </body>
 </html>
