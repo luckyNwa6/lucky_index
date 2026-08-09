@@ -179,25 +179,33 @@
       /* 网站状态 - 卡片边框变色 */
       .card.status-green {
         border-color: rgba(102, 187, 106, 0.35);
-        box-shadow: 0 0.6vw 1.6vw rgba(0, 0, 0, 0.1),
-                    0 0 0.8vw rgba(102, 187, 106, 0.12);
+        box-shadow:
+          0 0.6vw 1.6vw rgba(0, 0, 0, 0.1),
+          0 0 0.8vw rgba(102, 187, 106, 0.12);
       }
 
       .card.status-red {
         border-color: rgba(239, 83, 80, 0.35);
-        box-shadow: 0 0.6vw 1.6vw rgba(0, 0, 0, 0.1),
-                    0 0 0.8vw rgba(239, 83, 80, 0.12);
+        box-shadow:
+          0 0.6vw 1.6vw rgba(0, 0, 0, 0.1),
+          0 0 0.8vw rgba(239, 83, 80, 0.12);
       }
 
       .card.status-yellow {
         border-color: rgba(255, 167, 38, 0.35);
-        box-shadow: 0 0.6vw 1.6vw rgba(0, 0, 0, 0.1),
-                    0 0 0.8vw rgba(255, 167, 38, 0.12);
+        box-shadow:
+          0 0.6vw 1.6vw rgba(0, 0, 0, 0.1),
+          0 0 0.8vw rgba(255, 167, 38, 0.12);
       }
 
       @keyframes blink {
-        0%, 100% { opacity: 0.4; }
-        50% { opacity: 1; }
+        0%,
+        100% {
+          opacity: 0.4;
+        }
+        50% {
+          opacity: 1;
+        }
       }
 
       .card-desc {
@@ -340,8 +348,13 @@
       <p class="bio">全栈开发者 · Python | Java | Vue · 以下均是个人网站</p>
 
       <div class="links">
-        <a class="card" href="https://blog.luckynwa.top" target="_blank" data-url="https://blog.luckynwa.top">
-          <div class="card-title">🌐 博客网 / 主站</div>
+        <a
+          class="card"
+          href="https://blog.luckynwa.top"
+          target="_blank"
+          data-url="https://blog.luckynwa.top"
+        >
+          <div class="card-title">🧑‍💻 博客网 / 主站</div>
           <div class="card-desc">写文章、记录笔记、分享知识</div>
         </a>
         <a
@@ -362,20 +375,25 @@
           <div class="card-title">🛠 小维工具站</div>
           <div class="card-desc">基于开源工具站二开部署</div>
         </a>
-        <a class="card" href="https://admin.luckynwa.top" target="_blank" data-url="https://admin.luckynwa.top">
-          <div class="card-title">🖥 Java后台管理系统</div>
+        <a
+          class="card"
+          href="https://admin.luckynwa.top"
+          target="_blank"
+          data-url="https://admin.luckynwa.top"
+        >
+          <div class="card-title">🌟 Java后台管理系统</div>
           <div class="card-desc">基于若依框架二开后台系统</div>
         </a>
 
-        <a class="card" href="https://rag.luckynwa.top" target="_blank" data-url="https://rag.luckynwa.top">
-          <div class="card-title">🤖 Rag 对话平台</div>
-          <div class="card-desc">基于fastApi开发的对话平台</div>
+        <a
+          class="card"
+          href="https://rag.luckynwa.top"
+          target="_blank"
+          data-url="https://rag.luckynwa.top"
+        >
+          <div class="card-title">🤖 大模型与知识库</div>
+          <div class="card-desc">基于Python开发的AI平台</div>
         </a>
-
-        <!-- <a class="card" href="https://admin17.luckynwa.top" target="_blank">
-        <div class="card-title">🧩 AI 后台系统</div>
-        <div class="card-desc">基于芋道的 AI 管理系统，未上线</div>
-    </a> -->
 
         <a
           class="card"
@@ -387,7 +405,12 @@
           <div class="card-desc">技术文章同步更新</div>
         </a>
 
-        <a class="card" href="https://github.com/luckyNwa6" target="_blank" data-url="https://github.com">
+        <a
+          class="card"
+          href="https://github.com/luckyNwa6"
+          target="_blank"
+          data-url="https://github.com"
+        >
           <div class="card-title">🐙 GitHub</div>
           <div class="card-desc">开源项目与代码仓库</div>
         </a>
@@ -419,52 +442,54 @@
         </span>
       </a>
     </footer>
+    <script src="https://rag.luckynwa.top/widget.js?api_key=579e7e975dc52e2be8db96aa2241f0d9&base_url=https%3A%2F%2Frag.luckynwa.top&theme=%23409EFF&welcome=%E4%BD%A0%E5%A5%BD%EF%BC%81%E6%9C%89%E4%BB%80%E4%B9%88%E5%8F%AF%E4%BB%A5%E5%B8%AE%E5%8A%A9%E4%BD%A0%E7%9A%84%E5%90%97%EF%BC%9F"></script>
+
     <script>
       // 网站状态检测逻辑
       (function () {
         const SLOW_THRESHOLD = 3000; // 3秒以上视为忙碌
 
-        document.querySelectorAll('.card[data-url]').forEach(function (card) {
-          var url = card.getAttribute('data-url');
+        document.querySelectorAll(".card[data-url]").forEach(function (card) {
+          var url = card.getAttribute("data-url");
           if (!url) return;
 
           var start = Date.now();
 
           // 先尝试 no-cors 模式（跨域也能判断是否可达）
           fetch(url, {
-            method: 'HEAD',
-            mode: 'no-cors',
-            cache: 'no-store',
+            method: "HEAD",
+            mode: "no-cors",
+            cache: "no-store",
           })
             .then(function () {
               var elapsed = Date.now() - start;
               if (elapsed > SLOW_THRESHOLD) {
-                setStatus(card, 'yellow', '忙碌');
+                setStatus(card, "yellow", "忙碌");
               } else {
-                setStatus(card, 'green', '正常');
+                setStatus(card, "green", "正常");
               }
             })
             .catch(function () {
               // 第一次失败，再试一次带 cors 的 fetch
-              fetch(url, { method: 'HEAD', cache: 'no-store' })
+              fetch(url, { method: "HEAD", cache: "no-store" })
                 .then(function (res) {
                   var elapsed = Date.now() - start;
                   if (res.ok && elapsed <= SLOW_THRESHOLD) {
-                    setStatus(card, 'green', '正常');
+                    setStatus(card, "green", "正常");
                   } else if (res.ok && elapsed > SLOW_THRESHOLD) {
-                    setStatus(card, 'yellow', '忙碌');
+                    setStatus(card, "yellow", "忙碌");
                   } else {
-                    setStatus(card, 'red', '异常 ' + res.status);
+                    setStatus(card, "red", "异常 " + res.status);
                   }
                 })
                 .catch(function () {
-                  setStatus(card, 'red', '不可用');
+                  setStatus(card, "red", "不可用");
                 });
             });
         });
 
         function setStatus(el, color, title) {
-          el.classList.add('status-' + color);
+          el.classList.add("status-" + color);
           el.title = title;
         }
       })();
