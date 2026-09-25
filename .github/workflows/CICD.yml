@@ -38,4 +38,4 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           source: "./index.html,./avatar.webp,./favicon.ico,./assets/*"
           target: "/nwa/nginx/html/index"
-          strip_components: 1
+          strip_components: 0
