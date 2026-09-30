@@ -1,6 +1,6 @@
 :root {
   color-scheme: light;
-  font-family: "Source Han Serif", "Source Han Serif SC", "Noto Serif CJK SC", "Noto Serif SC", "Songti SC", serif;
+  font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
   font-size: 16px;
 }
 
@@ -210,6 +210,10 @@ h1 {
   letter-spacing: -0.04em;
   color: #111;
   text-align: center;
+}
+
+.content h2 {
+  font-family: "Source Han Serif", "Source Han Serif SC", "Noto Serif CJK SC", "Noto Serif SC", "Songti SC", serif;
 }
 
 .bio {
