@@ -4,6 +4,12 @@
   font-size: 16px;
 }
 
+@font-face {
+  font-family: "Source Han Serif";
+  src: url("https://cdn.jsdelivr.net/gh/adobe-fonts/source-han-serif@release/SubsetOTF/CN/SourceHanSerifCN-Regular.otf") format("opentype");
+  font-display: swap;
+}
+
 * { box-sizing: border-box; }
 
 html {
